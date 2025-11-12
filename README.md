@@ -1,50 +1,383 @@
-# Welcome to your Expo app 👋
+# 🚀 Dodo Payments Expo Boilerplate
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A **minimal and production-ready** React Native Expo boilerplate for integrating [Dodo Payments](https://dodopayments.com) checkout with in-app browser support.
 
-## Get started
+> **Focus**: Clean payment flow with reusable components. Perfect for subscriptions, one-time payments, and usage-based billing.
 
-1. Install dependencies
+## ✨ Features
 
-   ```bash
-   npm install
-   ```
+- ✅ **Simple Payment Flow** - Single premium plan with "Subscribe Now" button
+- ✅ **In-App Browser Checkout** - Seamless payment experience using `expo-web-browser`
+- ✅ **Deep Linking** - Automatic payment callback handling (`dodoexpo://payment/result?status=success`)
+- ✅ **Unified Result Screen** - One screen handles all payment outcomes (success/failed)
+- ✅ **Reusable Components** - Clean, modular payment components
+- ✅ **TypeScript** - Fully typed with minimal, focused types
+- ✅ **Dark Mode** - Beautiful UI that adapts to light and dark themes
+- ✅ **Production Ready** - Error handling, loading states, and haptic feedback
+- ✅ **Configurable** - Centralized config for easy customization
 
-2. Start the app
+## 📋 Prerequisites
 
-   ```bash
-   npx expo start
-   ```
+Before you begin:
 
-In the output, you'll find options to open the app in a
+- **Node.js** v18+
+- **Expo CLI** (`npm install -g expo-cli`)
+- **Dodo Payments Account** - [Sign up](https://dodopayments.com)
+- **Backend Server** - Your own endpoint for creating checkout sessions (required for security)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🛠️ Quick Start
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### 1. Install & Setup
 
 ```bash
-npm run reset-project
+# Clone and install
+git clone <your-repo-url>
+cd dodopayments-expo-boilerplate
+npm install
+
+# Install server dependencies
+cd server
+npm install
+cd ..
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Configure Environment
 
-## Learn more
+**App Environment:**
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+# Copy example config
+cp .env.example .env
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Edit `.env`:
 
-## Join the community
+```env
+# Your backend URL (e.g., http://localhost:3000 for local development)
+EXPO_PUBLIC_BACKEND_URL=http://localhost:3000
+```
 
-Join our community of developers creating universal apps.
+**Server Environment:**
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+# In the server directory
+cp .env.example .env
+```
+
+Edit `server/.env`:
+
+```env
+# Dodo Payments API Key
+DODOPAYMENTS_API_KEY=your_api_key_here
+
+# Environment (defaults to test_mode)
+DODOPAYMENTS_ENVIRONMENT=test_mode
+
+# Return URL
+# Must match your app's scheme in app.json
+DODOPAYMENTS_RETURN_URL=dodoexpo://payment/result
+
+# Server Port (defaults to 3000)
+PORT=3000
+```
+
+The demo server has hardcoded values for simplicity. In production, you'll replace this with your own backend that includes authentication, database integration, and proper customer/product management.
+
+### 3. Update App Configuration
+
+Edit `app.json` to match your app (update all "dodoexpo" references with your app's scheme and identifiers):
+
+```json
+{
+  "expo": {
+    "name": "Your App Name",
+    "slug": "your-app-slug",
+    "scheme": "yourapp",
+    "ios": {
+      "bundleIdentifier": "com.yourcompany.app"
+    },
+    "android": {
+      "package": "com.yourcompany.app"
+    }
+  }
+}
+```
+
+**Important**: The `scheme` is used for deep linking back to your app after payment.
+
+- Update the `scheme` (deep link URL scheme)
+- Update `bundleIdentifier` and `package` with your identifiers
+- Match the scheme in `server/.env` RETURN_URL
+
+### 4. Customize Product Details
+
+Edit `config/product.ts` to update your premium plan:
+
+```typescript
+export const HEADER_CONFIG = {
+  title: 'Your Plan Name',
+  subtitle: 'Your subtitle',
+};
+
+export const PRODUCT_CONFIG = {
+  price: '$19.99',
+  period: '/month',
+  badge: 'MOST POPULAR',
+  description: 'Your description',
+  features: [
+    'Feature 1',
+    'Feature 2',
+    'Feature 3',
+  ],
+  buttonText: 'Subscribe Now',
+  disclaimer: 'Cancel anytime. No hidden fees.',
+};
+```
+
+### 5. Run the App
+
+**Terminal 1 - Start Backend:**
+
+```bash
+cd server
+npm run dev
+```
+
+**Terminal 2 - Start Expo:**
+
+```bash
+npm start          # Start dev server
+npm run ios        # iOS simulator
+npm run android    # Android emulator
+```
+
+## 🔧 Backend Setup
+
+Your backend needs **one endpoint** to create checkout sessions:
+
+### POST `/checkout`
+
+The included `server/server.js` provides a simple working example.
+
+**Note:** This is a minimal demo server. In production, you should:
+
+- Add authentication to verify users
+- Get customer info from your database
+- Store product IDs in environment variables
+- Add proper error handling
+- Implement webhooks for payment verification
+
+**Response Format:**
+
+```json
+{
+  "checkout_url": "https://checkout.dodopayments.com/session/xxx",
+  "session_id": "session_xxx"
+}
+```
+
+For more examples, see [Dodo Payments Checkout Session Docs](https://docs.dodopayments.com/developer-resources/checkout-session).
+
+## 📱 App Structure
+
+```text
+app/
+├── (tabs)/
+│   ├── index.tsx        # Premium plan card + checkout button
+│   └── profile.tsx      # Profile placeholder
+├── payment/
+│   └── result.tsx       # Payment result screen
+└── _layout.tsx          # Root layout with deep linking
+
+components/
+├── payments/            # Payment-specific components
+│   ├── ProductCard.tsx      # Complete product card
+│   ├── FeatureList.tsx      # Feature list with checkmarks
+│   ├── PricingDisplay.tsx   # Price and period display
+│   ├── StatusIcon.tsx       # Payment status icon
+│   ├── PaymentButton.tsx    # Reusable payment button
+│   └── LoadingOverlay.tsx   # Loading overlay
+├── themed-text.tsx      # Theme-aware text component
+└── themed-view.tsx      # Theme-aware view component
+
+config/
+├── env.ts               # Environment configuration
+└── product.ts           # Product details configuration
+
+services/
+└── dodo-payments.ts     # Payment service
+
+types/
+└── dodo-payments.ts     # TypeScript types
+
+server/
+├── server.js            # Demo Express server
+├── package.json         # Server dependencies
+└── .env.example         # Server environment template
+```
+
+## 🔗 Deep Linking
+
+The app handles payment results via deep links:
+
+```text
+yourapp://payment/result?status=succeeded
+yourapp://payment/result?status=active
+yourapp://payment/result?status=failed&message=Card%20declined
+```
+
+## 🎨 Customization
+
+### Update Premium Plan
+
+Edit `config/product.ts` to customize all product details in one place:
+
+```typescript
+export const PRODUCT_CONFIG = {
+  price: '$29.99',              // Change price
+  period: '/year',              // Change period
+  badge: 'BEST VALUE',          // Change badge
+  description: 'Your text',     // Change description
+  features: [                   // Add/remove features
+    'Feature 1',
+    'Feature 2',
+  ],
+  buttonText: 'Get Started',    // Change button text
+  disclaimer: 'Your disclaimer', // Change disclaimer
+};
+```
+
+All changes automatically update the UI!
+
+### Add Multiple Plans
+
+Want to offer multiple pricing tiers? You can easily create multiple product cards:
+
+```typescript
+// In config/product.ts
+export const PLANS = {
+  basic: { price: '$5.00', ... },
+  premium: { price: '$10.00', ... },
+  pro: { price: '$20.00', ... },
+};
+
+// In app/(tabs)/index.tsx
+{Object.values(PLANS).map(plan => (
+  <ProductCard key={plan.price} {...plan} onCheckout={handleCheckout} />
+))}
+```
+
+### Customize Colors
+
+Edit `constants/theme.ts` to update app-wide colors:
+
+```typescript
+export const Colors = {
+  light: {
+    text: '#11181C',
+    background: '#fff',
+    tint: '#0a7ea4',
+  },
+  dark: {
+    text: '#ECEDEE',
+    background: '#151718',
+    tint: '#fff',
+  },
+};
+```
+
+## 🧪 Testing
+
+### Test Cards
+
+Use these test cards from Dodo Payments:
+
+- **Success**: `4242 4242 4242 4242`
+- **Decline**: `4000 0000 0000 0002`
+
+### Testing Flow
+
+1. Start the backend server: `cd server && npm run dev`
+2. Start Expo: `npm start`
+3. Tap "Subscribe Now" in the app
+4. Complete checkout with test card
+5. Get redirected back with result
+
+## 🐛 Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Backend not connecting | Check `EXPO_PUBLIC_BACKEND_URL` in `.env`. Ensure server is running on correct port. |
+| Deep links not working | Verify `scheme` in `app.json` matches your return URL. Rebuild app: `expo run:ios` or `expo run:android` |
+| Payment browser won't open | Check server logs for errors. Ensure API key is set in server `.env` |
+| Env variables not loading | Restart Expo with cache clear: `npm start -c` |
+| Server errors | Check server `.env` has `DODOPAYMENTS_API_KEY` set |
+
+## 📚 Resources
+
+- [Dodo Payments Docs](https://docs.dodopayments.com)
+- [Checkout Sessions API](https://docs.dodopayments.com/developer-resources/checkout-session)
+- [Mobile Integration Guide](https://docs.dodopayments.com/developer-resources/mobile-integration)
+- [Expo Router](https://docs.expo.dev/router)
+- [Expo Web Browser](https://docs.expo.dev/versions/latest/sdk/webbrowser)
+
+## 🚀 Deployment
+
+### Build for Production
+
+```bash
+# Install EAS CLI
+npm install -g eas-cli
+
+# Login to Expo
+eas login
+
+# Configure EAS (first time only)
+eas build:configure
+
+# Build for iOS
+eas build --platform ios
+
+# Build for Android
+eas build --platform android
+```
+
+### Environment Variables for Production
+
+1. Update `.env` with production backend URL
+2. Replace the demo server with your own backend that includes:
+   - Authentication and user management
+   - Database integration for customer data
+   - Product management
+   - Webhook handling
+   - Proper error handling and logging
+
+### Deploy Backend
+
+Deploy your backend to:
+
+- **Railway**
+- **Heroku**
+- **AWS/GCP/Azure**
+
+Make sure to set all environment variables in your hosting platform.
+
+## 🏗️ Next Steps
+
+1. ✅ **Customize** `config/product.ts` with your product details
+2. ✅ **Set up** your backend with proper authentication
+3. ✅ **Get** Dodo Payments API keys from dashboard
+4. ✅ **Test** thoroughly with test mode
+5. ✅ **Add** subscription management to profile screen
+6. ✅ **Implement** webhooks for server-side payment verification
+7. ✅ **Deploy** using `eas build`
+
+## 🔒 Security Best Practices
+
+- ❌ **Never** store API keys in the mobile app
+- ✅ **Always** create checkout sessions server-side
+- ✅ **Always** verify payments server-side using webhooks
+- ✅ **Always** authenticate users before creating checkout sessions
+- ✅ Use environment variables for all sensitive data
+
+---
