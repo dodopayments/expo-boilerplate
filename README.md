@@ -1,22 +1,36 @@
-# 🚀 Dodo Payments Expo Boilerplate
+# Dodo Payments Expo Boilerplat
 
-A **minimal and production-ready** React Native Expo boilerplate for integrating [Dodo Payments](https://dodopayments.com) checkout with in-app browser support.
+  <a href="https://discord.gg/bYqAp4ayYh">
+    <img src="https://img.shields.io/discord/1305511580854779984?label=Join%20Discord&logo=discord" alt="Join Discord" />
+  </a>
+  <a href="https://twitter.com/dodopayments">
+    <img src="https://img.shields.io/twitter/follow/dodopayments?label=Follow&style=social" alt="Twitter Follow" />
+  </a>
+
+A minimal and production-ready React Native Expo boilerplate for integrating [Dodo Payments](https://dodopayments.com) checkout with in-app browser support.
 
 > **Focus**: Clean payment flow with reusable components. Perfect for subscriptions, one-time payments, and usage-based billing.
 
-## ✨ Features
+## Demo
 
-- ✅ **Simple Payment Flow** - Single premium plan with "Subscribe Now" button
-- ✅ **In-App Browser Checkout** - Seamless payment experience using `expo-web-browser`
-- ✅ **Deep Linking** - Automatic payment callback handling (`dodoexpo://payment/result?status=success`)
-- ✅ **Unified Result Screen** - One screen handles all payment outcomes (success/failed)
-- ✅ **Reusable Components** - Clean, modular payment components
-- ✅ **TypeScript** - Fully typed with minimal, focused types
-- ✅ **Dark Mode** - Beautiful UI that adapts to light and dark themes
-- ✅ **Production Ready** - Error handling, loading states, and haptic feedback
-- ✅ **Configurable** - Centralized config for easy customization
+<a href="https://youtube.com/shorts/78N1qw14m0Y">
+  <img src="./images/demo.png" alt="Demo of Dodo Payments Expo Boilerplate" style="width:60%;">
+</a>
 
-## 📋 Prerequisites
+
+## Features
+
+- **Simple Payment Flow** - Single premium plan with "Subscribe Now" button
+- **In-App Browser Checkout** - Seamless payment experience using `expo-web-browser`
+- **Deep Linking** - Automatic payment callback handling (`dodoexpo://payment/result?status=success`)
+- **Unified Result Screen** - One screen handles all payment outcomes (success/failed)
+- **Reusable Components** - Clean, modular payment components
+- **TypeScript** - Fully typed with minimal, focused types
+- **Dark Mode** - UI that adapts to light and dark themes
+- **Production Ready** - Error handling, loading states, and haptic feedback
+- **Configurable** - Centralized config for easy customization
+
+## Prerequisites
 
 Before you begin:
 
@@ -25,7 +39,7 @@ Before you begin:
 - **Dodo Payments Account** - [Sign up](https://dodopayments.com)
 - **Backend Server** - Your own endpoint for creating checkout sessions (required for security)
 
-## 🛠️ Quick Start
+## Quick Start
 
 ### 1. Install & Setup
 
@@ -151,7 +165,7 @@ npm run ios        # iOS simulator
 npm run android    # Android emulator
 ```
 
-## 🔧 Backend Setup
+## Backend Setup
 
 Your backend needs **one endpoint** to create checkout sessions:
 
@@ -178,7 +192,7 @@ The included `server/server.js` provides a simple working example.
 
 For more examples, see [Dodo Payments Checkout Session Docs](https://docs.dodopayments.com/developer-resources/checkout-session).
 
-## 📱 App Structure
+## App Structure
 
 ```text
 app/
@@ -216,7 +230,7 @@ server/
 └── .env.example         # Server environment template
 ```
 
-## 🔗 Deep Linking
+## Deep Linking
 
 The app handles payment results via deep links:
 
@@ -226,7 +240,7 @@ yourapp://payment/result?status=active
 yourapp://payment/result?status=failed&message=Card%20declined
 ```
 
-## 🎨 Customization
+## Customization
 
 ### Update Premium Plan
 
@@ -286,7 +300,7 @@ export const Colors = {
 };
 ```
 
-## 🧪 Testing
+## Testing
 
 ### Test Cards
 
@@ -303,7 +317,7 @@ Use these test cards from Dodo Payments:
 4. Complete checkout with test card
 5. Get redirected back with result
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
@@ -313,7 +327,7 @@ Use these test cards from Dodo Payments:
 | Env variables not loading | Restart Expo with cache clear: `npm start -c` |
 | Server errors | Check server `.env` has `DODOPAYMENTS_API_KEY` set |
 
-## 📚 Resources
+## Resources
 
 - [Dodo Payments Docs](https://docs.dodopayments.com)
 - [Checkout Sessions API](https://docs.dodopayments.com/developer-resources/checkout-session)
@@ -321,7 +335,7 @@ Use these test cards from Dodo Payments:
 - [Expo Router](https://docs.expo.dev/router)
 - [Expo Web Browser](https://docs.expo.dev/versions/latest/sdk/webbrowser)
 
-## 🚀 Deployment
+## Deployment
 
 ### Build for Production
 
@@ -362,22 +376,22 @@ Deploy your backend to:
 
 Make sure to set all environment variables in your hosting platform.
 
-## 🏗️ Next Steps
+## Next Steps
 
-1. ✅ **Customize** `config/product.ts` with your product details
-2. ✅ **Set up** your backend with proper authentication
-3. ✅ **Get** Dodo Payments API keys from dashboard
-4. ✅ **Test** thoroughly with test mode
-5. ✅ **Add** subscription management to profile screen
-6. ✅ **Implement** webhooks for server-side payment verification
-7. ✅ **Deploy** using `eas build`
+1. **Customize** `config/product.ts` with your product details
+2. **Set up** your backend with proper authentication
+3. **Get** Dodo Payments API keys from dashboard
+4. **Test** thoroughly with test mode
+5. **Add** subscription management to profile screen
+6. **Implement** webhooks for server-side payment verification
+7. **Deploy** using `eas build`
 
-## 🔒 Security Best Practices
+## Security Best Practices
 
-- ❌ **Never** store API keys in the mobile app
-- ✅ **Always** create checkout sessions server-side
-- ✅ **Always** verify payments server-side using webhooks
-- ✅ **Always** authenticate users before creating checkout sessions
-- ✅ Use environment variables for all sensitive data
+- **Never** store API keys in the mobile app
+- **Always** create checkout sessions server-side
+- **Always** verify payments server-side using webhooks
+- **Always** authenticate users before creating checkout sessions
+- Use environment variables for all sensitive data
 
 ---
