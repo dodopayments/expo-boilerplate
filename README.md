@@ -1,4 +1,4 @@
-# Dodo Payments Expo Boilerplat
+# Dodo Payments Expo Boilerplate
 
   <a href="https://discord.gg/bYqAp4ayYh">
     <img src="https://img.shields.io/discord/1305511580854779984?label=Join%20Discord&logo=discord" alt="Join Discord" />
@@ -7,9 +7,7 @@
     <img src="https://img.shields.io/twitter/follow/dodopayments?label=Follow&style=social" alt="Twitter Follow" />
   </a>
 
-A minimal and production-ready React Native Expo boilerplate for integrating [Dodo Payments](https://dodopayments.com) checkout with in-app browser support.
-
-> **Focus**: Clean payment flow with reusable components. Perfect for subscriptions, one-time payments, and usage-based billing.
+A minimal and production-ready React Native Expo boilerplate for integrating [Dodo Payments](https://dodopayments.com). This boilerplate helps you quickly set up a clean payment flow with in-app browser support and deep links.
 
 ## Demo
 
@@ -17,18 +15,17 @@ A minimal and production-ready React Native Expo boilerplate for integrating [Do
   <img src="./images/demo.png" alt="Demo of Dodo Payments Expo Boilerplate" style="width:60%;">
 </a>
 
-
 ## Features
 
-- **Simple Payment Flow** - Single premium plan with "Subscribe Now" button
-- **In-App Browser Checkout** - Seamless payment experience using `expo-web-browser`
-- **Deep Linking** - Automatic payment callback handling (`dodoexpo://payment/result?status=success`)
-- **Unified Result Screen** - One screen handles all payment outcomes (success/failed)
-- **Reusable Components** - Clean, modular payment components
-- **TypeScript** - Fully typed with minimal, focused types
-- **Dark Mode** - UI that adapts to light and dark themes
-- **Production Ready** - Error handling, loading states, and haptic feedback
-- **Configurable** - Centralized config for easy customization
+- **Complete Payment Flow** - Ready-to-use checkout UI with payment result handling
+- **In-App Browser Integration** - Payment checkout via `expo-web-browser`
+- **Deep Linking** - Automatic callback routing for payment results (`yourapp://payment/result`)
+- **Reusable Components** - Modular payment UI components (ProductCard, FeatureList, StatusIcon)
+- **Demo Backend Server** - Express.js example server for checkout session creation
+- **TypeScript Support** - Fully typed with minimal, focused types
+- **Dark Mode** - Theme support for light and dark modes
+- **Haptic Feedback** - Native vibration feedback for better UX
+- **Easy Customization** - Centralized config for products, pricing, and features
 
 ## Prerequisites
 
@@ -37,7 +34,6 @@ Before you begin:
 - **Node.js** v18+
 - **Expo CLI** (`npm install -g expo-cli`)
 - **Dodo Payments Account** - [Sign up](https://dodopayments.com)
-- **Backend Server** - Your own endpoint for creating checkout sessions (required for security)
 
 ## Quick Start
 
@@ -45,8 +41,8 @@ Before you begin:
 
 ```bash
 # Clone and install
-git clone <your-repo-url>
-cd dodopayments-expo-boilerplate
+git clone https://github.com/dodopayments/expo-boilerplate.git
+cd expo-boilerplate
 npm install
 
 # Install server dependencies
@@ -89,7 +85,7 @@ DODOPAYMENTS_ENVIRONMENT=test_mode
 
 # Return URL
 # Must match your app's scheme in app.json
-DODOPAYMENTS_RETURN_URL=dodoexpo://payment/result
+DODOPAYMENTS_RETURN_URL=yourapp://payment/result
 
 # Server Port (defaults to 3000)
 PORT=3000
@@ -117,11 +113,7 @@ Edit `app.json` to match your app (update all "dodoexpo" references with your ap
 }
 ```
 
-**Important**: The `scheme` is used for deep linking back to your app after payment.
-
-- Update the `scheme` (deep link URL scheme)
-- Update `bundleIdentifier` and `package` with your identifiers
-- Match the scheme in `server/.env` RETURN_URL
+**Important**: The `scheme` is used for deep linking back to your app after payment. It must match the `DODOPAYMENTS_RETURN_URL` in your server `.env` file.
 
 ### 4. Customize Product Details
 
@@ -324,7 +316,7 @@ Use these test cards from Dodo Payments:
 | Backend not connecting | Check `EXPO_PUBLIC_BACKEND_URL` in `.env`. Ensure server is running on correct port. |
 | Deep links not working | Verify `scheme` in `app.json` matches your return URL. Rebuild app: `expo run:ios` or `expo run:android` |
 | Payment browser won't open | Check server logs for errors. Ensure API key is set in server `.env` |
-| Env variables not loading | Restart Expo with cache clear: `npm start -c` |
+| Env variables not loading | Restart Expo with cache clear: `npm start -- -c` |
 | Server errors | Check server `.env` has `DODOPAYMENTS_API_KEY` set |
 
 ## Resources
@@ -332,7 +324,7 @@ Use these test cards from Dodo Payments:
 - [Dodo Payments Docs](https://docs.dodopayments.com)
 - [Checkout Sessions API](https://docs.dodopayments.com/developer-resources/checkout-session)
 - [Mobile Integration Guide](https://docs.dodopayments.com/developer-resources/mobile-integration)
-- [Expo Router](https://docs.expo.dev/router)
+- [Expo Docs](https://docs.expo.dev/)
 - [Expo Web Browser](https://docs.expo.dev/versions/latest/sdk/webbrowser)
 
 ## Deployment
