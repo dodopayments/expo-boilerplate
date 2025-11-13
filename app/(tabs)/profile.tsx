@@ -14,7 +14,7 @@ export default function ProfileScreen() {
           Profile
         </ThemedText>
         <ThemedText style={styles.text}>
-          This is the profile page. Add your subscription status and user info here.
+          This is the profile page.
         </ThemedText>
       </View>
     </ThemedView>
